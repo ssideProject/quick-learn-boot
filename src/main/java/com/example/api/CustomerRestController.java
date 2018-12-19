@@ -1,7 +1,5 @@
 package com.example.api;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +30,8 @@ public class CustomerRestController {
 	
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	Optional<Customer> getCustomer(@PathVariable Integer id) {
-		Optional<Customer> customer  = customerService.findOne(id); // Optional<Customer> 은 언제 쓰는건지 처음 써보네
+	Customer getCustomer(@PathVariable Integer id) {
+		Customer customer  = customerService.findOne(id); // Optional<Customer> 은 언제 쓰는건지 처음 써보네
 		return customer;
 	}
 	

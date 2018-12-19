@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.Customer;
 import com.example.service.CustomerService;
@@ -44,4 +45,37 @@ public class CustomerController {
 		customerService.create(customer);
 		return "redirect:/customers";
 	}
+	
+	@RequestMapping(value="edit", params="form", method = RequestMethod.GET)
+	String editForm(@RequestParam Integer id , CustomerForm form) { // CustomerForm이 어떻게 쓰이는지 자세히 공부하기 
+		Customer customer = customerService.findOne(id);
+		BeanUtils.copyProperties(customer, form); // beanUtils.copy도 잘 모르겠음. 그냥 복사만하는건지 validation도 하는건지.
+		return "customers/edit";
+	}
+	
+	@RequestMapping(value="edit", method = RequestMethod.POST)
+	String edit(@RequestParam Integer id, @Validated CustomerForm form, BindingResult result) {
+		if (result.hasErrors()) {
+			return editForm(id, form);
+		}
+		Customer customer = new Customer();
+		BeanUtils.copyProperties(form, customer);
+		customer.setId(id);
+		customerService.update(customer);
+		return "redirect:/customers";
+	}
+	
+	
+	@RequestMapping(value = "edit", params = "goToTop")
+	String goToTop() {
+		return "redirect:/customers";
+	}
+	
+	@RequestMapping(value="delete", method = RequestMethod.POST)
+	String edit(@RequestParam Integer id) {
+		customerService.delete(id);
+		return "redirect:/customers";
+	}
+	
+	
 }

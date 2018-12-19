@@ -1,7 +1,6 @@
 package com.example.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,8 +27,8 @@ public class CustomerService {
 		return customerRepository.findAll();
 	}
 	
-	public Optional<Customer> findOne(Integer id) {
-		return customerRepository.findById(id);
+	public Customer findOne(Integer id) {
+		return customerRepository.getOne(id);
 	}
 	
 	public Customer create(Customer customer) {
